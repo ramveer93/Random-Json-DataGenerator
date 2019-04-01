@@ -38,6 +38,11 @@ This is how the swagger request looks like
 
 ### Request explained
 
+#### Request URL
+```Java Properties
+http://<host>:<port>/v1/dataGenerator/generateData
+```
+  
 #### Query parameters
 There are 4 query parameters
 
