@@ -3,5 +3,6 @@ A Spring-boot project to generate random json data which can be used to perform 
 in JSON format.
 
 
+![images](randomData1.jpg)
 
 
