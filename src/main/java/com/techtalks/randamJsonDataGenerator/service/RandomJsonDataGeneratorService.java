@@ -19,6 +19,12 @@ import com.techtalks.randamJsonDataGenerator.exception.RandomJsonGeneratorExcept
 import com.techtalks.randamJsonDataGenerator.utils.DataType;
 import com.techtalks.randamJsonDataGenerator.utils.RandomJsonDataGeneratorUtils;
 
+/**
+ * 
+ * @author sramveer
+ *
+ */
+
 @Component
 public class RandomJsonDataGeneratorService {
 

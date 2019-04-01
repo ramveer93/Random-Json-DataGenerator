@@ -19,6 +19,12 @@ import com.techtalks.randamJsonDataGenerator.utils.Constants;
 import com.techtalks.randamJsonDataGenerator.utils.DataType;
 import com.techtalks.randamJsonDataGenerator.utils.ResponseParser;
 
+/**
+ * 
+ * @author sramveer
+ *
+ */
+
 @RestController
 @RequestMapping(value = "/v1/dataGenerator")
 public class RandomJsonDataGeneratorController {
