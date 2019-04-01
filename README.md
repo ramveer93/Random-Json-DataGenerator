@@ -22,7 +22,7 @@ mvn clean install
 ```
 
 ## Usage
-Once maven build is successfull , the application will run on default port of > 8081 . You can change it by changing the entry inside resources/application.properties as below
+Once maven build is successfull , the application will run on default port of `8081`. You can change it by changing the entry inside resources/application.properties as below
 ```Java Properties
 server.port=8081
 ```
@@ -84,6 +84,10 @@ JSON which you want to repeate no of times. Below is one of the example
   ]
 }
 ````
-In this JSON if you want to repeat > again   element theb xpath will be > array.try.again
+In this JSON if you want to repeat > again   element theb xpath will be  `array.try.again`
 
+## Contributing
+Please raise an issue if you find anything which is not working or want unimplemented functionality.
 
+## License
+[MIT](https://choosealicense.com/licenses/mit/)
