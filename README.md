@@ -48,6 +48,7 @@ There are 4 query parameters
 #### Request header
 ````bash
 Content-Type : application/json
+xpath : <path of the particular json element>
 ````
 #### Request Body
 JSON which you want to repeate no of times. Below is one of the example
@@ -83,5 +84,6 @@ JSON which you want to repeate no of times. Below is one of the example
   ]
 }
 ````
+In this JSON if you want to repeat > again   element theb xpath will be > array.try.again
 
 
