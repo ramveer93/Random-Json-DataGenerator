@@ -25,10 +25,10 @@ public class RandomJsonDataGeneratorService {
 	@Autowired
 	private RandomJsonDataGeneratorUtils utils;
 
-	public String generateData(String body, int recordCount, String type, String xpath) {
+	public String generateData(String body, int recordCount, String type, String xpath, boolean randomValues) {
 		try {
 			if (type.equals(DataType.JSON.toString())) {
-				return parseRequestedJSON(body, recordCount, convertXpathToList(xpath));
+				return parseRequestedJSON(body, recordCount, convertXpathToList(xpath), randomValues);
 			}
 		} catch (JSONException e) {
 			throw new RandomJsonGeneratorException(e.getMessage());
@@ -40,13 +40,15 @@ public class RandomJsonDataGeneratorService {
 		return xpath.isEmpty() ? new ArrayList<>() : Arrays.asList(xpath.trim().split("\\."));
 	}
 
-	private String parseRequestedJSON(String json, int recordCount, List<String> xpath) throws JSONException {
+	private String parseRequestedJSON(String json, int recordCount, List<String> xpath, boolean randomValues)
+			throws JSONException {
 		JSONObject object = new JSONObject(json);
-		object = parseXpath(object, xpath, recordCount);
+		object = parseXpath(object, xpath, recordCount, randomValues);
 		return object.toString();
 	}
 
-	private JSONObject parseXpath(JSONObject object, List<String> xpath, int count) throws JSONException {
+	private JSONObject parseXpath(JSONObject object, List<String> xpath, int count, boolean randomValues)
+			throws JSONException {
 		int i = 0;
 		Map<String, JSONArray> map = new ConcurrentHashMap<>();
 		JSONArray ar = new JSONArray();
@@ -54,14 +56,18 @@ public class RandomJsonDataGeneratorService {
 			ar = object.getJSONArray(xpath.get(i));
 			object = object.getJSONArray(xpath.get(i)).getJSONObject(0);
 			if (i == xpath.size() - 1) {
-				Set<String> keys = getArrayKeySet(object);
-				for (String key : keys) {
-					if (object.get(key) instanceof String) {
-						object.put(key, utils.getRandomString());
-					} else if (object.get(key) instanceof Integer) {
-						object.put(key, utils.getRandomInteger());
+				if (randomValues) {
+					Set<String> keys = getArrayKeySet(object);
+					for (String key : keys) {
+						if (object.get(key) instanceof String) {
+							object.put(key, utils.getRandomString());
+						} else if (object.get(key) instanceof Integer) {
+							object.put(key, utils.getRandomInteger());
+						}
+
 					}
 				}
+
 				for (int j = 0; j < count - 1; j++) {
 
 					ar.put(object);

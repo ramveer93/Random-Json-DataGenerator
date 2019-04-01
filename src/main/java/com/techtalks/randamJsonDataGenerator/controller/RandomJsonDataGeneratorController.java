@@ -26,7 +26,7 @@ public class RandomJsonDataGeneratorController {
 	private ResponseParser responseParser;
 	@Autowired
 	private RandomJsonDataGeneratorService service;
-	
+
 	/**
 	 * logger object to log the operations
 	 */
@@ -42,13 +42,13 @@ public class RandomJsonDataGeneratorController {
 	 */
 	@RequestMapping(value = "/generateData", method = RequestMethod.POST, produces = "application/json")
 	public ResponseEntity<Object> generateData(@RequestBody String jsonBody,
-			@RequestParam(value = "recordCount") Integer recordCount,
-			@RequestParam(value = "dataType") String dataType, @RequestHeader(value="xpath") String xpath) {
+			@RequestParam(value = "recordCount") Integer recordCount, @RequestParam(value = "dataType") String dataType,
+			@RequestParam(value = "randomValues") boolean randomValues, @RequestHeader(value = "xpath") String xpath) {
 		String jsonString = Constants.EMPTY_STRING;
 		try {
-			this.logger.info("input params : dataType {}, xpath: {},recordCount: {} ",dataType,xpath,recordCount);
-			validateInput(jsonBody, recordCount, dataType,xpath);
-			jsonString = this.service.generateData(jsonBody, recordCount, dataType,xpath);
+			this.logger.info("input params : dataType {}, xpath: {},recordCount: {} ", dataType, xpath, recordCount);
+			validateInput(jsonBody, recordCount, dataType, xpath);
+			jsonString = this.service.generateData(jsonBody, recordCount, dataType, xpath, randomValues);
 		} catch (IllegalArgumentException e) {
 			return new ResponseEntity<>(
 					this.responseParser.build(HttpStatus.BAD_REQUEST.value(), e.getMessage(), e.getMessage()),
@@ -68,7 +68,7 @@ public class RandomJsonDataGeneratorController {
 	 * @param recordCount
 	 * @param dataType
 	 */
-	private void validateInput(String jsonBody, Integer recordCount, String dataType,String xpath) {
+	private void validateInput(String jsonBody, Integer recordCount, String dataType, String xpath) {
 		try {
 			Assert.hasLength(jsonBody, "RequestBody must Not be empty");
 			Assert.hasLength(dataType, "dataType must not be empty");
@@ -76,7 +76,7 @@ public class RandomJsonDataGeneratorController {
 			Assert.isTrue(dataType.equals(DataType.JSON.toString()) || dataType.equals(DataType.CSV.toString()),
 					"DataType format is not supported");
 		} catch (IllegalArgumentException e) {
-			this.logger.error("Any one/all of the input is wrong  ",e.getMessage());
+			this.logger.error("Any one/all of the input is wrong  ", e.getMessage());
 			throw new IllegalArgumentException(e.getMessage());
 		}
 
